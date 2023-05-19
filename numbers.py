@@ -300,8 +300,8 @@ class Float(Fraction):
         '''
         assert n >= 0, 'The parameter n must be greater than 0'
         assert n < 1, 'The parameter n must be less than 1
-        if n == 0:
-            return Integer(0)
+        if n == 0 or n == 1:
+            return Integer(n)
         left = Fraction(0, 1)
         right = Fraction(1, 1)
         test = Fraction(left.numerator+right.numerator, left.denominator+right.denominator)
