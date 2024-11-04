@@ -199,21 +199,6 @@ class Fraction:
         to_return = self.numerator==other.numerator and self.denominator==other.denominator
         return to_return
     
-    def __lt__(self, other):
-        '''
-        Checks if the left Fraction is less than the right Fraction
-        
-        Parameters
-        ----------
-            None
-        
-        Returns:
-            to_return: bool
-                        True if the left Fraction is smaller than the right Fraction, False otherwise
-        '''
-        to_return = self.numerator*other.denominator < other.numerator*self.denominator
-        return to_return
-    
     def __gt__(self, other):
         '''
         Checks if the left Fraction is greater than the right Fraction
@@ -229,6 +214,49 @@ class Fraction:
         '''
         to_return = not self.__eq__(other) and not self.__lt__(other)
         return to_return
+        
+    def __ge__(self, other):
+        '''
+        Checks if the left Fraction is greater than or equal to the right Fraction
+        
+        Parameters
+        ----------
+            None
+        
+        Returns:
+            to_return: bool
+                        True if the left Fraction is greater than or equal to the right Fraction, False otherwise
+        '''
+        return self > other or self == other
+
+    def __lt__(self, other):
+        '''
+        Checks if the left Fraction is less than the right Fraction
+        
+        Parameters
+        ----------
+            None
+        
+        Returns:
+            to_return: bool
+                        True if the left Fraction is less than the right Fraction, False otherwise
+        '''
+        return not self >= other
+
+    def __le__(self, other):
+        '''
+        Checks if the left Fraction is less than or equal to the right Fraction
+        
+        Parameters
+        ----------
+            None
+        
+        Returns:
+            to_return: bool
+                        True if the left Fraction is less than or equal to the right Fraction, False otherwise
+        '''
+        return self < other or self == other
+        
 
 class Integer(Fraction):
     '''
@@ -275,7 +303,7 @@ class Float(Fraction):
             None
         '''
         whole = int(n//1)
-        part = self.farey(n-w, eps)
+        part = self.farey(n-whole, eps)
         new_int = Integer(whole)
         new_frac = new_int + part
         super().__init__(new_frac.numerator, new_frac.denominator)
@@ -299,7 +327,7 @@ class Float(Fraction):
                 the approximation of the decimal portion of the float accurate to eps                
         '''
         assert n >= 0, 'The parameter n must be greater than 0'
-        assert n < 1, 'The parameter n must be less than 1
+        assert n < 1, 'The parameter n must be less than 1'
         if n == 0 or n == 1:
             return Integer(n)
         left = Fraction(0, 1)
