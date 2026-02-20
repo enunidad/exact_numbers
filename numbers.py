@@ -212,7 +212,9 @@ class Fraction:
             to_return: bool
                         Tru is the left Fraction is bigger than the right Fraction, False otherwise
         '''
-        to_return = not self.__eq__(other) and not self.__lt__(other)
+        s_num = other.denominator * self.numerator
+        o_num = self.denominator * other.numerator
+        to_return = s_num > o_num
         return to_return
         
     def __ge__(self, other):
